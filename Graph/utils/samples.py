@@ -1,4 +1,4 @@
-from edge import Edge
+from utils.edge import Edge
 sample_graph = {
     0: [Edge(1,9),Edge(3,5),Edge(5,7),Edge(2,0)],
     1: [Edge(0,9),Edge(3,-2),Edge(6,4),Edge(4,3)],
