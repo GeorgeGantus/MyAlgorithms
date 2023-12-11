@@ -51,3 +51,4 @@ def find(target):
     return target
 
 print(union_find(unconnected_graph))
+print(size)
