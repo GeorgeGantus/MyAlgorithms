@@ -1,28 +1,25 @@
 from utils.samples import unconnected_graph
 
-adj_list = unconnected_graph
-#Assume that each node is mapped to a integer, if its not your case create a map first
+def union_find(adj_list):
+    #Assume that each node is mapped to a integer, if its not your case create a map first
 
-num_of_components = len(adj_list.keys())
-parents = [i for i in range(num_of_components)]
-size = [1 for _ in range(num_of_components)]
+    num_of_components = len(adj_list.keys())
+    parents = [i for i in range(num_of_components)]
+    size = [1 for _ in range(num_of_components)]
 
-def union_find(edge_list):
-
-    for source, edges in edge_list.items():
+    for source, edges in adj_list.items():
         for edge in edges:
-            union(source, edge.target)
+            num_of_components = union(source, edge.target, size, parents, num_of_components)
     
-    return num_of_components
+    return num_of_components, size
 
 
-def union(node_a, node_b):
+def union(node_a, node_b, size, parents, num_of_components):
 
-    global num_of_components
-    root_a, root_b = find(node_a), find(node_b)
+    root_a, root_b = find(node_a, parents), find(node_b, parents)
 
     if root_a == root_b:
-        return
+        return num_of_components
 
     if size[root_a] >= size[root_b]:
         size[root_a] += size[root_b]
@@ -34,10 +31,10 @@ def union(node_a, node_b):
         parents[root_a] = root_b
 
 
-    num_of_components -= 1
+    return num_of_components - 1
 
 
-def find(target):
+def find(target, parents):
     root = target
     while parents[root] != root:
         root = parents[root]
@@ -50,5 +47,8 @@ def find(target):
 
     return target
 
-print(union_find(unconnected_graph))
-print(size)
+def main():
+    print(union_find(unconnected_graph))
+
+if __name__ == '__main__':
+    main()
