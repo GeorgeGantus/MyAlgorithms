@@ -52,3 +52,45 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+class UnionFind:
+    
+    def __init__(self, elements):
+        self.values = elements
+        self.parents = [index for index,_ in enumerate(elements)]
+        self.size = [1 for _ in elements]
+        self.num_of_components = len(elements)
+
+    def union(self, a, b):
+        root_a, root_b = self.find(a), self.find(b)
+
+        if root_a == root_b:
+            return
+        
+        if self.size(root_a) >= self.size(root_b):
+            self.parents[root_b] = root_a
+            self.size[root_a] += self.size[root_b]
+            self.size[root_b] = 0
+        else:
+            self.parents[root_a] = root_b
+            self.size[root_b] += self.size[root_a]
+            self.size[root_a] = 0
+
+        self.num_of_components -= 1            
+
+
+    def find(self, target):
+        root = target
+        while self.parents[root] != root:
+            root = self.parents[root]
+
+        while target != root:
+            nxt = self.parents[target]
+            self.parents[target] = root
+            target = nxt
+
+        return root
+    
+    def is_connected(self, a,b):
+        self.find(a) == self.find(b)
+        return
