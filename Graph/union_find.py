@@ -67,7 +67,7 @@ class UnionFind:
         if root_a == root_b:
             return
         
-        if self.size(root_a) >= self.size(root_b):
+        if self.size[root_a] >= self.size[root_b]:
             self.parents[root_b] = root_a
             self.size[root_a] += self.size[root_b]
             self.size[root_b] = 0
@@ -92,5 +92,4 @@ class UnionFind:
         return root
     
     def is_connected(self, a,b):
-        self.find(a) == self.find(b)
-        return
+        return self.find(a) == self.find(b)
