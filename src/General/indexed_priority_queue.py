@@ -20,8 +20,8 @@ class IndexedPriorityQueue:
         current_index = index
 
         #TODO: check if indexes are in bound, this function and in get_childs
-         
-        while self.heap[current_index] > self.heap[child_a] or self.heap[current_index] > self.heap[child_b]:
+        
+        while self.is_min_heap_valid(current_index, child_a) or self.is_min_heap_valid(current_index, child_a):
             if self.heap[child_a] <= self.heap[child_b]:
                 self.swap(child_a, current_index)
                 current_index = child_a
@@ -29,11 +29,17 @@ class IndexedPriorityQueue:
                 self.swap(child_b, current_index)
                 current_index = child_b
             child_a, child_b = self.get_childs(current_index)
-
-        
-
         return
+    
+    def is_min_heap_valid(self, index_parent, index_child_a, index_child_b):
 
+        if index_parent >= len(self.heap):
+            return False
+        
+        if index_child_a >= len(self.heap):
+            return True
+        
+        return self.heap[index_parent] > self.heap[index_child]
 
     def swap(self,a,b):
         aux = self.heap[a]
